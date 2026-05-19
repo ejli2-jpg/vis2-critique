@@ -1,0 +1,9 @@
+city,state,latitude,longitude,spend_billion_aud,trips_millions
+Sydney,New South Wales,-33.8688,151.2093,30.7,37.1
+Melbourne,Victoria,-37.8136,144.9631,23.1,28.4
+Brisbane,Queensland,-27.4698,153.0251,12.8,14.2
+Perth,Western Australia,-31.9505,115.8605,8.7,9.2
+Adelaide,South Australia,-34.9285,138.6007,5.9,6.8
+Canberra,Australian Capital Territory,-35.2809,149.1300,2.8,3.1
+Hobart,Tasmania,-42.8821,147.3272,2.1,2.4
+Darwin,Northern Territory,-12.4634,130.8456,1.0,1.2

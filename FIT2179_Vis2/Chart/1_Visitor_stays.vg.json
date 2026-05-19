@@ -1,0 +1,140 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Domestic vs international visitor nights by state",
+    "subtitle": "Each dot ≈ 1M visitor nights | Source: TRA NVS + IVS, Dec 2024",
+    "anchor": "start",
+    "fontSize": 15,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666"
+  },
+  "data": {
+    "url": "../Data/domestic_international_nights_state.csv"
+  },
+  "transform": [
+    {
+      "calculate": "sequence(0, ceil(datum.nights_millions / 1))",
+      "as": "dot_array"
+    },
+    {
+      "flatten": [
+        "dot_array"
+      ],
+      "as": [
+        "dot_index"
+      ]
+    },
+    {
+      "calculate": "datum.dot_index % 5",
+      "as": "col"
+    },
+    {
+      "calculate": "floor(datum.dot_index / 5)",
+      "as": "row"
+    }
+  ],
+  "facet": {
+    "field": "state",
+    "type": "nominal",
+    "sort": {
+      "field": "nights_millions",
+      "order": "descending"
+    },
+    "header": {
+      "labelFontSize": 11,
+      "labelOrient": "bottom",
+      "labelPadding": 5,
+      "title": null
+    }
+  },
+  "spec": {
+    "width": 70,
+    "height": 70,
+    "mark": {
+      "type": "circle",
+      "size": 80,
+      "opacity": 0.85
+    },
+    "encoding": {
+      "x": {
+        "field": "col",
+        "type": "quantitative",
+        "axis": null,
+        "scale": {
+          "domain": [
+            -0.5,
+            4.5
+          ]
+        }
+      },
+      "y": {
+        "field": "row",
+        "type": "quantitative",
+        "axis": null,
+        "scale": {
+          "reverse": true,
+          "domain": [
+            -0.5,
+            4.5
+          ]
+        }
+      },
+      "color": {
+        "field": "type",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "Domestic",
+            "International"
+          ],
+          "range": [
+            "#D85A30",
+            "#185FA5"
+          ]
+        },
+        "legend": {
+          "orient": "bottom",
+          "direction": "horizontal",
+          "labelFontSize": 12,
+          "labelFontWeight": "normal",
+          "symbolSize": 120,
+          "symbolStrokeWidth": 0,
+          "columnPadding": 20,
+          "rowPadding": 8,
+          "padding": 10,
+          "fillColor": "#ffffff",
+          "strokeColor": "#e8e6e0",
+          "cornerRadius": 6,
+          "title": "Each dot ≈ 1M visitor nights",
+          "titleFontSize": 11,
+          "titleFontWeight": "normal",
+          "titleColor": "#666666",
+          "titlePadding": 8,
+          "labelColor": "#1a1a1a"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "title": "State"
+        },
+        {
+          "field": "type",
+          "title": "Visitor type"
+        },
+        {
+          "field": "nights_millions",
+          "title": "Visitor nights (millions)",
+          "format": ".1f"
+        }
+      ]
+    }
+  },
+  "columns": 8,
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "background": "#ffffff"
+  }
+}

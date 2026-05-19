@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Key international flight corridors into Australia",
+    "subtitle": "Node size = visitor volume | Edge thickness = weekly flight frequency | Source: TRA IVS + BITRE",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 1380,
+  "height": 420,
+  "projection": {
+    "type": "naturalEarth1"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#d8e8ef",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": { "url": "../Data/flight_edges.csv" },
+      "transform": [
+        {
+          "lookup": "source",
+          "from": {
+            "data": { "url": "../Data/flight_nodes.csv" },
+            "key": "id",
+            "fields": ["latitude", "longitude"]
+          },
+          "as": ["src_lat", "src_lon"]
+        },
+        {
+          "lookup": "target",
+          "from": {
+            "data": { "url": "../Data/flight_nodes.csv" },
+            "key": "id",
+            "fields": ["latitude", "longitude"]
+          },
+          "as": ["tgt_lat", "tgt_lon"]
+        }
+      ],
+      "mark": { "type": "rule", "color": "#185FA5", "opacity": 0.4 },
+      "encoding": {
+        "longitude":  { "field": "src_lon",  "type": "quantitative" },
+        "latitude":   { "field": "src_lat",  "type": "quantitative" },
+        "longitude2": { "field": "tgt_lon" },
+        "latitude2":  { "field": "tgt_lat" },
+        "strokeWidth": {
+          "field": "frequency_weekly",
+          "type": "quantitative",
+          "scale": { "range": [0.5, 6] },
+          "legend": {
+            "title": "Flights/week",
+            "orient": "bottom-left",
+            "titleFontSize": 10,
+            "labelFontSize": 9
+          }
+        }
+      }
+    },
+    {
+      "data": { "url": "../Data/flight_nodes.csv" },
+      "mark": { "type": "circle", "opacity": 0.85, "stroke": "#ffffff", "strokeWidth": 1.2 },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude":  { "field": "latitude",  "type": "quantitative" },
+        "size": {
+          "field": "visitors_thousands",
+          "type": "quantitative",
+          "scale": { "range": [80, 2000] },
+          "legend": {
+            "title": "Visitors (thousands)",
+            "orient": "bottom-right",
+            "titleFontSize": 10,
+            "labelFontSize": 9
+          }
+        },
+        "color": {
+          "field": "region",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Hub", "Oceania", "Asia", "Americas", "Europe", "Middle East & Africa"],
+            "range": ["#1D9E75", "#D85A30", "#185FA5", "#85B7EB", "#7F77DD", "#BA7517"]
+          },
+          "legend": {
+            "title": "Region",
+            "orient": "top-right",
+            "titleFontSize": 10,
+            "labelFontSize": 9
+          }
+        },
+        "tooltip": [
+          { "field": "name",                "title": "Airport" },
+          { "field": "region",              "title": "Region" },
+          { "field": "visitors_thousands",  "title": "Visitors (thousands)", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "../Data/flight_nodes.csv" },
+      "mark": { "type": "text", "dy": -12, "fontSize": 9, "fontWeight": "bold", "color": "#222222" },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude":  { "field": "latitude",  "type": "quantitative" },
+        "text":      { "field": "code" }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null }, "background": "#dde9f2" }
+}

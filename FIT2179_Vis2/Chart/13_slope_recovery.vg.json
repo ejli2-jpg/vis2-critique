@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "COVID recovery: visitor trips by country, 2019 vs 2024",
+    "subtitle": "Green = above pre-COVID levels | Red = still below | Source: TRA IVS",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 240,
+  "height": 380,
+  "data": { "url": "../data/covid_recovery_countries.csv" },
+  "transform": [
+    {
+      "fold": ["trips_2019", "trips_2024"],
+      "as": ["period", "trips"]
+    },
+    {
+      "calculate": "datum.period === 'trips_2019' ? '2019' : '2024'",
+      "as": "year_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "line", "strokeWidth": 2, "opacity": 0.75 },
+      "encoding": {
+        "x": {
+          "field": "year_label", "type": "ordinal",
+          "title": null,
+          "axis": { "labelFontSize": 13, "labelFontWeight": "bold" }
+        },
+        "y": {
+          "field": "trips", "type": "quantitative",
+          "title": "Visitor trips (thousands)",
+          "axis": { "labelFontSize": 10, "grid": true, "gridDash": [3,3], "gridColor": "#e0e0e0" }
+        },
+        "detail": { "field": "country" },
+        "color": {
+          "field": "recovery_status", "type": "nominal",
+          "title": "Recovery vs 2019",
+          "scale": {
+            "domain": ["Above 2019", "Below 2019"],
+            "range":  ["#639922", "#E24B4A"]
+          },
+          "legend": { "orient": "bottom", "titleFontSize": 11, "labelFontSize": 11 }
+        }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "size": 65, "opacity": 1 },
+      "encoding": {
+        "x": { "field": "year_label", "type": "ordinal" },
+        "y": { "field": "trips",      "type": "quantitative" },
+        "color": {
+          "field": "recovery_status", "type": "nominal",
+          "scale": {
+            "domain": ["Above 2019", "Below 2019"],
+            "range":  ["#639922", "#E24B4A"]
+          }
+        },
+        "tooltip": [
+          { "field": "country",         "title": "Country" },
+          { "field": "year_label",      "title": "Year" },
+          { "field": "trips",           "title": "Trips (thousands)", "format": ",.0f" },
+          { "field": "recovery_status", "title": "Status" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.year_label === '2024'" }],
+      "mark": { "type": "text", "align": "left", "dx": 7, "fontSize": 10, "fontWeight": "bold" },
+      "encoding": {
+        "x":    { "field": "year_label", "type": "ordinal" },
+        "y":    { "field": "trips",      "type": "quantitative" },
+        "text": { "field": "country" },
+        "color": {
+          "field": "recovery_status", "type": "nominal",
+          "scale": {
+            "domain": ["Above 2019", "Below 2019"],
+            "range":  ["#3B6D11", "#A32D2D"]
+          }
+        }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null }, "axis": { "domain": false, "ticks": false } }
+}

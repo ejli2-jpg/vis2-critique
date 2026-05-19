@@ -1,0 +1,20 @@
+id,parent,name,category,participation_pct
+root,,Visitor activities,,
+nature,root,Nature & Outdoors,Nature & Outdoors,
+food,root,Food & Drink,Food & Drink,
+culture,root,Culture & Heritage,Culture & Heritage,
+shopping,root,Shopping & Entertainment,Shopping & Entertainment,
+beach,nature,Beach,Nature & Outdoors,42
+parks,nature,National parks,Nature & Outdoors,38
+wildlife,nature,Wildlife parks,Nature & Outdoors,32
+hiking,nature,Bushwalking,Nature & Outdoors,27
+whale,nature,Whale watching,Nature & Outdoors,15
+restaurants,food,Restaurants,Food & Drink,71
+wineries,food,Wineries,Food & Drink,22
+markets,food,Farmers markets,Food & Drink,14
+heritage,culture,Heritage sites,Culture & Heritage,35
+museums,culture,Museums,Culture & Heritage,34
+festivals,culture,Festivals,Culture & Heritage,28
+malls,shopping,Shopping malls,Shopping & Entertainment,65
+theatre,shopping,Theatre,Shopping & Entertainment,20
+concerts,shopping,Concerts,Shopping & Entertainment,18

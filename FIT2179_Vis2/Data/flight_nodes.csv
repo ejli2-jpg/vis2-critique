@@ -1,0 +1,13 @@
+id,code,name,region,visitors_thousands,latitude,longitude
+AUS,SYD,Sydney,Hub,8402,-33.9,151.2
+NZ,AKL,Auckland,Oceania,1300,-36.9,174.8
+SIN,SIN,Singapore,Asia,320,1.4,103.9
+KUL,KUL,Kuala Lumpur,Asia,280,2.7,101.7
+HKG,HKG,Hong Kong,Asia,230,22.3,114.2
+TYO,TYO,Tokyo,Asia,270,35.7,139.8
+DEL,DEL,New Delhi,Asia,486,28.6,77.1
+LAX,LAX,Los Angeles,Americas,670,33.9,-118.4
+LHR,LHR,London,Europe,581,51.5,-0.5
+DXB,DXB,Dubai,Middle East & Africa,72,25.3,55.4
+CDG,CDG,Paris,Europe,145,49.0,2.6
+FRA,FRA,Frankfurt,Europe,185,50.0,8.6

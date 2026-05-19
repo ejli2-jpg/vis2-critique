@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Visitor expenditure by purpose of travel",
+    "subtitle": "Spend in Australia ($M AUD) | Source: TRA NVS + IVS, Dec 2024",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 320,
+  "data": { "url": "../Data/expenditure_by_purpose.csv" },
+  "mark": { "type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3 },
+  "encoding": {
+    "x": {
+      "field": "purpose", "type": "nominal",
+      "title": "Purpose of travel",
+      "sort": ["-y"],
+      "axis": { "labelFontSize": 12, "labelAngle": -15 }
+    },
+    "y": {
+      "field": "spend_million_aud", "type": "quantitative",
+      "title": "Spend ($M AUD)",
+      "stack": "zero",
+      "axis": { "labelFontSize": 10, "grid": true, "gridDash": [3,3], "gridColor": "#e0e0e0", "format": "~s" }
+    },
+    "color": {
+      "field": "visitor_type", "type": "nominal",
+      "title": "Visitor type",
+      "scale": {
+        "domain": ["Domestic", "International"],
+        "range":  ["#D85A30", "#185FA5"]
+      },
+      "legend": { "orient": "top-right", "titleFontSize": 11, "labelFontSize": 11 }
+    },
+    "tooltip": [
+      { "field": "purpose",          "title": "Purpose" },
+      { "field": "visitor_type",     "title": "Visitor type" },
+      { "field": "spend_million_aud","title": "Spend ($M AUD)", "format": ",.0f" }
+    ]
+  },
+  "config": { "view": { "stroke": null }, "axis": { "domain": false, "ticks": false } }
+}

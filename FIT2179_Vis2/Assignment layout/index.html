@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tourism in Australia</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style> 
+ #c-align {
+      text-align: center;
+    }
+  </style> 
+</head>
+<body>
+    <h1 id="c-align">Australia's Visitor Economy at a Glance</h1>
+    <h2>The Big Picture</h2>
+    <p>UAustralia's visitor economy is one of the country's most dynamic industries — shaped by millions of journeys taken every year, from weekend getaways in regional Victoria to long-haul flights landing in Sydney from Tokyo, London, and New Delhi.
+This visualisation tells that story in full. We explore where Australians travel within their own country, which nations send the most visitors to our shores, what those visitors do and spend when they arrive, and how the industry has clawed its way back from the most devastating disruption in its history — the COVID-19 pandemic.
+The picture that emerges is one of remarkable scale, stark geographic inequality, and an uneven recovery that has left some markets thriving and others still finding their footing.</p>
+    
+
+    <div id="visitor_stays"></div>
+    <script>
+      vegaEmbed('#visitor_stays','../Chart/1_Visitor_stays.vg.json');
+    </script>
+
+    <h2> Where in Australia?</h2>
+    <h3> 1.2.1 Table Rows (Level 3)</h3>
+    <p> This is a third paragraph about table rows</p>
+    
+    <h3> 1.2.2 Table Columns (Level 3)</h3>
+    <p> This is a paragraph about table columns.</p>
+
+    <h2> International visitors</h2>
+    <p>This is the fourth paragraph about images in HTML. </p>
+
+    <h2> Purpose & Activities</h2>
+
+    <h2> When do they visit — and are we back to normal?</h2>
+</body>
+
+</html>

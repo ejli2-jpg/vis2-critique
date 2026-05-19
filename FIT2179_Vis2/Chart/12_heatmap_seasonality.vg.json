@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "When do international visitors arrive? Monthly seasonality",
+    "subtitle": "Visitor arrivals (thousands) by month and year | Source: ABS Overseas Arrivals and Departures",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 560,
+  "height": 240,
+  "data": { "url": "../data/monthly_arrivals.csv" },
+  "mark": { "type": "rect", "cornerRadius": 2 },
+  "encoding": {
+    "x": {
+      "field": "year", "type": "ordinal",
+      "title": "Year",
+      "axis": { "labelFontSize": 11, "labelAngle": -30 }
+    },
+    "y": {
+      "field": "month", "type": "ordinal",
+      "title": null,
+      "sort": ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+      "axis": { "labelFontSize": 11 }
+    },
+    "color": {
+      "field": "arrivals_thousands", "type": "quantitative",
+      "title": "Arrivals (thousands)",
+      "scale": { "scheme": "yelloworangered", "domainMin": 0 },
+      "legend": { "orient": "right", "titleFontSize": 11, "labelFontSize": 10, "gradientLength": 200 }
+    },
+    "tooltip": [
+      { "field": "month",             "title": "Month" },
+      { "field": "year",              "title": "Year" },
+      { "field": "arrivals_thousands","title": "Arrivals (thousands)", "format": ",.0f" }
+    ]
+  },
+  "config": {
+    "view": { "stroke": null, "step": 18 },
+    "axis": { "domain": false, "ticks": false }
+  }
+}

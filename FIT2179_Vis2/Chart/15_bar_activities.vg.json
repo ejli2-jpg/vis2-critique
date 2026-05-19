@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top activities undertaken by international visitors in Australia",
+    "subtitle": "% of international visitors who participated | Source: TRA IVS, Dec 2024",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 1100,
+  "height": 360,
+  "data": { "url": "../data/visitor_activities.csv" },
+  "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+  "encoding": {
+    "y": {
+      "field": "activity", "type": "nominal",
+      "sort": "-x",
+      "title": null,
+      "axis": { "labelFontSize": 11 }
+    },
+    "x": {
+      "field": "participation_pct", "type": "quantitative",
+      "title": "% of international visitors",
+      "axis": {
+        "labelFontSize": 10,
+        "grid": true, "gridDash": [3,3], "gridColor": "#e0e0e0",
+        "format": ".0f"
+      }
+    },
+    "color": {
+      "field": "category", "type": "nominal",
+      "title": "Category",
+      "scale": {
+        "domain": ["Nature & Outdoors", "Food & Drink", "Culture & Heritage", "Shopping & Entertainment", "Sport & Adventure"],
+        "range":  ["#1D9E75",           "#D85A30",     "#7F77DD",            "#185FA5",                  "#BA7517"]
+      },
+      "legend": { "orient": "bottom", "titleFontSize": 11, "labelFontSize": 11, "columns": 3 }
+    },
+    "tooltip": [
+      { "field": "activity",         "title": "Activity" },
+      { "field": "category",         "title": "Category" },
+      { "field": "participation_pct","title": "% of visitors", "format": ".1f" }
+    ]
+  },
+  "config": { "view": { "stroke": null }, "axis": { "domain": false, "ticks": false } }
+}

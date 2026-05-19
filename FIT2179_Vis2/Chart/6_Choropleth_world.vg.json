@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where do Australia's international visitors come from?",
+    "subtitle": [
+      "Visitor trips (thousands) by country of origin | Source: TRA International Visitor Survey, Dec 2024",
+      "Asia dominates. The top 5 source markets — New Zealand, China, USA, UK, and India — account for 55% of all international visitor trips."
+    ],
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+  "width": 800,
+  "height": 460,
+  "params": [
+    {
+      "name": "continent",
+      "value": "World",
+      "bind": {
+        "input": "select",
+        "options": [
+          "World",
+          "Asia",
+          "Oceania",
+          "Europe",
+          "Americas",
+          "Africa",
+          "Middle East"
+        ],
+        "name": "Zoom to region: "
+      }
+    },
+    {
+      "name": "proj_scale",
+      "expr": "continent == 'World' ? 148 : continent == 'Asia' ? 380 : continent == 'Oceania' ? 500 : continent == 'Europe' ? 520 : continent == 'Americas' ? 260 : continent == 'Africa' ? 360 : continent == 'Middle East' ? 560 : 148"
+    },
+    {
+      "name": "proj_tx",
+      "expr": "continent == 'World' ? 400 : continent == 'Asia' ? 80 : continent == 'Oceania' ? -120 : continent == 'Europe' ? 230 : continent == 'Americas' ? 680 : continent == 'Africa' ? 220 : continent == 'Middle East' ? 50 : 400"
+    },
+    {
+      "name": "proj_ty",
+      "expr": "continent == 'World' ? 240 : continent == 'Asia' ? 160 : continent == 'Oceania' ? 10 : continent == 'Europe' ? 430 : continent == 'Americas' ? 230 : continent == 'Africa' ? 110 : continent == 'Middle East' ? 280 : 240"
+    }
+  ],
+  "projection": {
+    "type": "naturalEarth1",
+    "scale": { "expr": "proj_scale" },
+    "translate": { "expr": "[proj_tx, proj_ty]" }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "graticule" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#b0c8d8",
+        "strokeWidth": 0.3,
+        "filled": false
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#d8e8ef",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": { "url": "../Data/intl_visitors_all_countries_v2.csv" },
+            "key": "country_id",
+            "fields": ["country", "trips_thousands", "spend_million_aud", "region"]
+          }
+        },
+        { "filter": "datum.trips_thousands != null" }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "color": {
+          "field": "trips_thousands",
+          "type": "quantitative",
+          "title": "Visitor trips (thousands)",
+          "scale": {
+            "type": "log",
+            "scheme": "tealblues",
+            "domain": [1, 1400]
+          },
+          "legend": {
+            "orient": "bottom-left",
+            "titleFontSize": 12,
+            "titleFontWeight": "bold",
+            "labelFontSize": 10,
+            "gradientLength": 180,
+            "gradientThickness": 14
+          }
+        },
+        "tooltip": [
+          { "field": "country",           "title": "Country" },
+          { "field": "region",            "title": "Region" },
+          { "field": "trips_thousands",   "title": "Visitor trips (thousands)", "format": ",.0f" },
+          { "field": "spend_million_aud", "title": "Spend in Australia ($M AUD)", "format": ",.0f" }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "background": "#dde9f2"
+  }
+}

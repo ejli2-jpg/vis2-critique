@@ -1,0 +1,119 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "International visitor arrivals to Australia, 2012–2024",
+    "subtitle": "Short-term visitor arrivals | Source: ABS Overseas Arrivals and Departures",
+    "anchor": "start",
+    "fontSize": 15,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 280,
+  "layer": [
+    {
+      "data": {
+        "values": [{ "start": 2020, "end": 2022, "label": "COVID-19 border restrictions" }]
+      },
+      "mark": { "type": "rect", "color": "#FCEBEB", "opacity": 0.7 },
+      "encoding": {
+        "x": { "field": "start", "type": "quantitative", "scale": {"domain": [2012, 2024]} },
+        "x2": { "field": "end" }
+      }
+    },
+    {
+      "data": { "values": [{ "x": 2021, "label": "COVID-19 border restrictions" }] },
+      "mark": {
+        "type": "text",
+        "color": "#A32D2D",
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "dy": -100
+      },
+      "encoding": {
+        "x": { "field": "x", "type": "quantitative", "scale": {"domain": [2012, 2024]} },
+        "text": { "field": "label" }
+      }
+    },
+    {
+      "data": { "url": "../Data/arrivals_trend_annual.csv" },
+      "mark": {
+        "type": "area",
+        "line": { "color": "#185FA5", "strokeWidth": 2.5 },
+        "color": "#185FA5",
+        "opacity": 0.12
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "axis": { "format": "d", "labelFontSize": 11 },
+          "scale": {"domain": [2012, 2024]}
+        },
+        "y": {
+          "field": "visitor_arrivals",
+          "type": "quantitative",
+          "title": "Short-term visitor arrivals",
+          "axis": {
+            "labelFontSize": 10,
+            "format": "~s",
+            "grid": true,
+            "gridDash": [3, 3],
+            "gridColor": "#e0e0e0"
+          }
+        },
+        "tooltip": [
+          { "field": "year", "title": "Year", "format": "d" },
+          { "field": "visitor_arrivals", "title": "Visitor arrivals", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "../Data/arrivals_trend_annual.csv" },
+      "mark": { "type": "point", "color": "#185FA5", "filled": true, "size": 55 },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "scale": {"domain": [2012, 2024]}
+        },
+        "y": { "field": "visitor_arrivals", "type": "quantitative" }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"year": 2019, "y": 9464000, "label": "Peak: 9.4M", "anchor": "end"},
+          {"year": 2021, "y": 263000,  "label": "▼ 97% collapse", "anchor": "middle"},
+          {"year": 2024, "y": 8402000, "label": "89% recovered ▲", "anchor": "end"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "dy": -12,
+        "dx": -30
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "quantitative", "scale": {"domain": [2012, 2024]} },
+        "y": { "field": "y",    "type": "quantitative" },
+        "text": { "field": "label" },
+        "align": { "field": "anchor" },
+        "color": {
+          "condition": [
+            {"test": "datum.year === 2021", "value": "#A32D2D"},
+            {"test": "datum.year === 2024", "value": "#2e6b1f"}
+          ],
+          "value": "#185FA5"
+        }
+      }
+    }
+  ],
+  "resolve": { "scale": { "x": "shared" } },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "domain": false, "ticks": false }
+  }
+}

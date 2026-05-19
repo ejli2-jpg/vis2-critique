@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "State-by-state international visitor recovery",
+    "subtitle": "2024 arrivals as % of 2019 levels | Source: ABS Overseas Arrivals and Departures",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 500,
+  "height": 450,
+  "projection": {
+    "type": "mercator",
+    "center": [133, -28],
+    "scale": 620
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "../Data/au-states-topo.json",
+        "format": { "type": "topojson", "feature": "states" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.STATE_NAME",
+          "from": {
+            "data": { "url": "../Data/state_recovery_pct.csv" },
+            "key": "state",
+            "fields": ["recovery_pct", "arrivals_2019", "arrivals_2024"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "color": {
+          "field": "recovery_pct",
+          "type": "quantitative",
+          "title": "% of 2019 arrivals",
+          "scale": {
+            "domain": [75, 115],
+            "range":  ["#E24B4A", "#EF9F27", "#97C459"],
+            "type": "linear"
+          },
+          "legend": {
+            "orient": "bottom-left",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "gradientLength": 160,
+            "labelExpr": "datum.value + '%'"
+          }
+        },
+        "tooltip": [
+          { "field": "properties.STATE_NAME", "title": "State / Territory" },
+          { "field": "recovery_pct",   "title": "Recovery (% of 2019)", "format": ".0f" },
+          { "field": "arrivals_2024",  "title": "2024 arrivals",        "format": ",.0f" },
+          { "field": "arrivals_2019",  "title": "2019 arrivals",        "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "../data/state_recovery_pct.csv" },
+      "mark": { "type": "text", "fontSize": 11, "fontWeight": "bold", "color": "#333333" },
+      "encoding": {
+        "longitude": { "field": "label_lon", "type": "quantitative" },
+        "latitude":  { "field": "label_lat", "type": "quantitative" },
+        "text": {
+          "field": "recovery_pct",
+          "type": "quantitative",
+          "format": ".0f",
+          "formatType": "number"
+        }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null }, "background": "#f0f7fb" }
+}

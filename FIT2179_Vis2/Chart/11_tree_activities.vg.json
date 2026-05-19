@@ -1,0 +1,107 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Hierarchical tree of visitor activities: root → category → individual activity. Leaf node size = % participation.",
+  "width": 600,
+  "height": 420,
+  "padding": { "left": 10, "right": 200, "top": 10, "bottom": 10 },
+
+  "data": [
+    {
+      "name": "tree",
+      "url": "../data/visitor_activities_tree.csv",
+      "format": { "type": "csv" },
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "tree",
+          "method": "tidy",
+          "size": [{ "signal": "height" }, { "signal": "width - 200" }],
+          "separation": false,
+          "as": ["y", "x", "depth", "children"]
+        }
+      ]
+    },
+    {
+      "name": "links",
+      "source": "tree",
+      "transform": [
+        { "type": "treelinks" },
+        {
+          "type": "linkpath",
+          "orient": "horizontal",
+          "shape": "diagonal"
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["root", "Nature & Outdoors", "Food & Drink", "Culture & Heritage", "Shopping & Entertainment"],
+      "range": ["#1D9E75", "#1D9E75", "#D85A30", "#7F77DD", "#185FA5"]
+    },
+    {
+      "name": "leaf_size",
+      "type": "linear",
+      "domain": [0, 75],
+      "range": [30, 280]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "path",
+      "from": { "data": "links" },
+      "encode": {
+        "update": {
+          "path":          { "field": "path" },
+          "stroke":        { "value": "#cccccc" },
+          "strokeWidth":   { "value": 1 },
+          "strokeOpacity": { "value": 0.7 }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": { "data": "tree" },
+      "encode": {
+        "enter": {
+          "x":           { "field": "x" },
+          "y":           { "field": "y" },
+          "size": {
+            "signal": "datum.children ? 180 : scale('leaf_size', datum.participation_pct || 30)"
+          },
+          "fill":        { "scale": "color", "field": "category" },
+          "fillOpacity": { "value": 0.75 },
+          "stroke":      { "value": "#ffffff" },
+          "strokeWidth": { "value": 1.5 },
+          "tooltip": {
+            "signal": "datum.children ? {'Category': datum.name} : {'Activity': datum.name, 'Category': datum.category, '% of visitors': datum.participation_pct + '%'}"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "tree" },
+      "encode": {
+        "enter": {
+          "x":        { "field": "x" },
+          "y":        { "field": "y" },
+          "dx":       { "signal": "datum.children ? -8 : 10" },
+          "align":    { "signal": "datum.children ? 'right' : 'left'" },
+          "baseline": { "value": "middle" },
+          "text":     { "signal": "datum.children ? datum.name : datum.name + ' (' + datum.participation_pct + '%)'" },
+          "fontSize": { "value": 10 },
+          "fill":     { "value": "#333333" }
+        }
+      }
+    }
+  ]
+}

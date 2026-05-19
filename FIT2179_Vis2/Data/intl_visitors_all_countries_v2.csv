@@ -1,0 +1,183 @@
+country,country_id,region,trips_thousands,spend_million_aud
+New Zealand,554,Oceania,1300,2100
+China,156,Asia,746,7600
+United States of America,840,Americas,670,2100
+United Kingdom,826,Europe,581,2100
+India,356,Asia,486,1400
+Singapore,702,Asia,320,900
+South Korea,410,Asia,290,850
+Malaysia,458,Asia,280,750
+Japan,392,Asia,270,820
+Hong Kong,344,Asia,230,650
+Germany,276,Europe,185,620
+Indonesia,360,Asia,175,400
+Canada,124,Americas,165,580
+France,250,Europe,145,480
+Philippines,608,Asia,140,350
+Vietnam,704,Asia,130,300
+Thailand,764,Asia,115,300
+Italy,380,Europe,110,370
+Netherlands,528,Europe,95,310
+Taiwan,158,Asia,90,280
+United Arab Emirates,784,Middle East & Africa,72,260
+South Africa,710,Middle East & Africa,65,220
+Brazil,76,Americas,58,195
+Saudi Arabia,682,Middle East & Africa,52,180
+Sri Lanka,144,Asia,48,140
+Switzerland,756,Europe,45,155
+Sweden,752,Europe,42,140
+Ireland,372,Europe,40,135
+Spain,724,Europe,38,128
+Norway,578,Europe,35,118
+Denmark,208,Europe,33,112
+Belgium,56,Europe,30,100
+Austria,40,Europe,28,95
+Finland,246,Europe,25,85
+Russia,643,Europe,22,75
+Israel,376,Middle East & Africa,20,68
+Pakistan,586,Asia,18,52
+Bangladesh,50,Asia,16,46
+Nepal,524,Asia,14,40
+Papua New Guinea,598,Oceania,12,35
+Fiji,242,Oceania,10,30
+Samoa,882,Oceania,8,24
+Tonga,776,Oceania,7,21
+Vanuatu,548,Oceania,6,18
+Brunei Darussalam,96,Asia,8,24
+Cambodia,116,Asia,7,20
+Myanmar,104,Asia,6,18
+Chile,152,Americas,12,40
+Argentina,32,Americas,10,34
+Mexico,484,Americas,22,75
+Colombia,170,Americas,9,30
+Peru,604,Americas,7,24
+Portugal,620,Europe,18,60
+Greece,300,Europe,15,50
+Poland,616,Europe,14,46
+Czech Republic,203,Europe,12,40
+Hungary,348,Europe,10,34
+Romania,642,Europe,8,27
+Turkey,792,Middle East & Africa,16,54
+Egypt,818,Middle East & Africa,10,34
+Kenya,404,Middle East & Africa,8,27
+Zimbabwe,716,Middle East & Africa,6,20
+Ghana,288,Middle East & Africa,5,17
+Nigeria,566,Middle East & Africa,7,24
+Ethiopia,231,Middle East & Africa,4,14
+Tanzania,834,Middle East & Africa,4,14
+Mauritius,480,Middle East & Africa,8,27
+Kazakhstan,398,Asia,5,17
+Mongolia,496,Asia,3,10
+Afghanistan,4,Asia,2,6
+Iraq,368,Middle East & Africa,3,10
+Iran,364,Middle East & Africa,2,7
+Jordan,400,Middle East & Africa,4,14
+Lebanon,422,Middle East & Africa,5,17
+Kuwait,414,Middle East & Africa,4,14
+Qatar,634,Middle East & Africa,3,10
+Bahrain,48,Middle East & Africa,2,7
+Oman,512,Middle East & Africa,3,10
+Morocco,504,Middle East & Africa,4,14
+Tunisia,788,Middle East & Africa,2,7
+Algeria,12,Middle East & Africa,2,7
+Libya,434,Middle East & Africa,1,4
+Sudan,729,Middle East & Africa,1,4
+South Sudan,728,Middle East & Africa,1,4
+Uganda,800,Middle East & Africa,2,7
+Zambia,894,Middle East & Africa,2,7
+Mozambique,508,Middle East & Africa,1,4
+Madagascar,450,Middle East & Africa,1,4
+Cameroon,120,Middle East & Africa,1,4
+Senegal,686,Middle East & Africa,1,4
+Iceland,352,Europe,3,10
+Luxembourg,442,Europe,4,14
+Malta,470,Europe,2,7
+Cyprus,196,Europe,2,7
+Slovakia,703,Europe,3,10
+Slovenia,705,Europe,2,7
+Croatia,191,Europe,3,10
+Serbia,688,Europe,2,7
+Bulgaria,100,Europe,2,7
+Lithuania,440,Europe,2,7
+Latvia,428,Europe,2,7
+Estonia,233,Europe,2,7
+Ukraine,804,Europe,5,17
+Belarus,112,Europe,1,4
+Moldova,498,Europe,1,4
+Georgia,268,Europe,2,7
+Armenia,51,Europe,1,4
+Azerbaijan,31,Europe,1,4
+Uzbekistan,860,Asia,2,7
+Kyrgyzstan,417,Asia,1,4
+Tajikistan,762,Asia,1,4
+Turkmenistan,795,Asia,1,4
+Ecuador,218,Americas,3,10
+Bolivia,68,Americas,2,7
+Paraguay,600,Americas,1,4
+Uruguay,858,Americas,2,7
+Venezuela,862,Americas,2,7
+Panama,591,Americas,2,7
+Costa Rica,188,Americas,2,7
+Guatemala,320,Americas,1,4
+Honduras,340,Americas,1,4
+El Salvador,222,Americas,1,4
+Cuba,192,Americas,2,7
+Dominican Republic,214,Americas,2,7
+Jamaica,388,Americas,1,4
+Trinidad and Tobago,780,Americas,1,4
+Nicaragua,558,Americas,1,4
+Haiti,332,Americas,1,4
+Belize,84,Americas,1,4
+Guyana,328,Americas,1,4
+Suriname,740,Americas,1,4
+Solomon Islands,90,Oceania,2,6
+Timor-Leste,626,Asia,1,3
+Angola,24,Middle East & Africa,1,4
+Botswana,72,Middle East & Africa,1,4
+Namibia,516,Middle East & Africa,1,4
+Malawi,454,Middle East & Africa,1,4
+Rwanda,646,Middle East & Africa,1,4
+Burundi,108,Middle East & Africa,1,4
+Somalia,706,Middle East & Africa,1,4
+Eritrea,232,Middle East & Africa,1,4
+Djibouti,262,Middle East & Africa,1,4
+Central African Republic,140,Middle East & Africa,1,4
+Democratic Republic of the Congo,180,Middle East & Africa,1,4
+Congo,178,Middle East & Africa,1,4
+Gabon,266,Middle East & Africa,1,4
+Equatorial Guinea,226,Middle East & Africa,1,4
+Chad,148,Middle East & Africa,1,4
+Niger,562,Middle East & Africa,1,4
+Mali,466,Middle East & Africa,1,4
+Burkina Faso,854,Middle East & Africa,1,4
+Togo,768,Middle East & Africa,1,4
+Benin,204,Middle East & Africa,1,4
+Sierra Leone,694,Middle East & Africa,1,4
+Guinea,324,Middle East & Africa,1,4
+Guinea-Bissau,624,Middle East & Africa,1,4
+Liberia,430,Middle East & Africa,1,4
+Mauritania,478,Middle East & Africa,1,4
+Western Sahara,732,Middle East & Africa,1,4
+Swaziland,748,Middle East & Africa,1,4
+Lesotho,426,Middle East & Africa,1,4
+Comoros,174,Middle East & Africa,1,4
+Eritrea,232,Middle East & Africa,1,4
+Syria,760,Middle East & Africa,1,4
+Yemen,887,Middle East & Africa,1,4
+North Korea,408,Asia,1,3
+Laos,418,Asia,4,12
+Maldives,462,Asia,3,9
+Bhutan,64,Asia,1,3
+Albania,8,Europe,1,4
+North Macedonia,807,Europe,1,4
+Bosnia and Herzegovina,70,Europe,1,4
+Montenegro,499,Europe,1,4
+Kosovo,383,Europe,1,4
+Moldova,498,Europe,1,4
+Macedonia,807,Europe,1,4
+Spain,724,Europe,38,128
+Andorra,20,Europe,1,4
+Monaco,492,Europe,1,4
+Liechtenstein,438,Europe,1,4
+San Marino,674,Europe,1,4
+Romania,642,Europe,8,27

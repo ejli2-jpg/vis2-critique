@@ -1,0 +1,93 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top 10 international visitor markets to Australia",
+    "subtitle": "Visitor trips (thousands), year ending December 2024 | Source: TRA IVS",
+    "anchor": "start",
+    "fontSize": 15,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666"
+  },
+  "width": 420,
+  "height": 300,
+  "data": {
+    "url": "../Data/top10_countries.csv"
+  },
+  "layer": [
+    {
+      "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null,
+          "axis": { "labelFontSize": 12 }
+        },
+        "x": {
+          "field": "trips_2024",
+          "type": "quantitative",
+          "title": "Visitor trips (thousands)",
+          "axis": {
+            "labelFontSize": 10,
+            "grid": true,
+            "gridDash": [3, 3],
+            "gridColor": "#e0e0e0"
+          }
+        },
+        "color": {
+          "field": "trips_2024",
+          "type": "quantitative",
+          "scale": { "scheme": "oranges" },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "country", "title": "Country" },
+          { "field": "trips_2024", "title": "2024 trips (thousands)", "format": ",.0f" },
+          { "field": "trips_2019", "title": "2019 trips (thousands)", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "fontSize": 10,
+        "color": "#555"
+      },
+      "encoding": {
+        "y": { "field": "country", "type": "nominal", "sort": "-x" },
+        "x": { "field": "trips_2024", "type": "quantitative" },
+        "text": { "field": "trips_2024", "type": "quantitative", "format": ",.0f" }
+      }
+    },
+    {
+      "data": { "values": [{ "x": 500 }] },
+      "mark": { "type": "rule", "strokeDash": [4, 4], "color": "#999", "strokeWidth": 1.5 },
+      "encoding": {
+        "x": { "field": "x", "type": "quantitative" }
+      }
+    },
+    {
+      "data": { "values": [{ "x": 500, "label": "500K threshold — only 5 markets exceed this" }] },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "dy": -120,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#999"
+      },
+      "encoding": {
+        "x": { "field": "x", "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "domain": false, "ticks": false }
+  }
+}

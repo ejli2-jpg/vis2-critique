@@ -1,0 +1,11 @@
+purpose,visitor_type,spend_million_aud
+Holiday,International,11000
+Holiday,Domestic,42000
+Visiting Friends & Relatives,International,5000
+Visiting Friends & Relatives,Domestic,26000
+Business,International,2000
+Business,Domestic,19000
+Education,International,11600
+Education,Domestic,3000
+Other,International,1800
+Other,Domestic,9900

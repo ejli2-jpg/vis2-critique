@@ -1,0 +1,94 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Domestic vs international visitor nights over time",
+    "subtitle": "Annual visitor nights (millions) | Source: TRA NVS + IVS",
+    "anchor": "start",
+    "fontSize": 15,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 280,
+  "data": {
+    "url": "../Data/visitor_nights_by_type.csv"
+  },
+  "mark": {
+    "type": "area",
+    "opacity": 0.72,
+    "line": {
+      "strokeWidth": 2
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "temporal",
+      "title": "Year",
+      "axis": {
+        "labelFontSize": 11,
+        "format": "%Y"
+      }
+    },
+    "y": {
+      "field": "nights_millions",
+      "type": "quantitative",
+      "title": "Visitor nights (millions)",
+      "stack": null,
+      "axis": {
+        "labelFontSize": 10,
+        "grid": true,
+        "gridDash": [
+          3,
+          3
+        ],
+        "gridColor": "#e0e0e0"
+      }
+    },
+    "color": {
+      "field": "visitor_type",
+      "type": "nominal",
+      "title": "Visitor type",
+      "scale": {
+        "domain": [
+          "Domestic",
+          "International"
+        ],
+        "range": [
+          "#D85A30",
+          "#185FA5"
+        ]
+      },
+      "legend": {
+        "orient": "top-right",
+        "labelFontSize": 11
+      }
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "title": "Year",
+        "type": "temporal",
+        "format": "%Y"
+      },
+      {
+        "field": "visitor_type",
+        "title": "Type"
+      },
+      {
+        "field": "nights_millions",
+        "title": "Visitor nights (M)",
+        "format": ".1f"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "domain": false,
+      "ticks": false
+    }
+  }
+}

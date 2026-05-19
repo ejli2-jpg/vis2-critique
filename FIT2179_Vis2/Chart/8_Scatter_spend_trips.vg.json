@@ -1,0 +1,72 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "International visitors: trip volume vs spend in Australia",
+    "subtitle": "Bubble size = avg spend per trip | Use dropdown to filter by region | Source: TRA IVS, Dec 2024",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 380,
+  "data": { "url": "../Data/intl_visitors_all_countries_v2.csv" },
+  "params": [
+    {
+      "name": "hover",
+      "select": { "type": "point", "on": "mouseover" }
+    },
+    {
+      "name": "region_select",
+      "bind": {
+        "input": "select",
+        "options": [null, "Asia", "Americas", "Europe", "Oceania", "Middle East & Africa"],
+        "labels":  ["All regions", "Asia", "Americas", "Europe", "Oceania", "Middle East & Africa"],
+        "name": "Filter by region: "
+      }
+    }
+  ],
+  "transform": [
+    { "filter": "region_select == null || datum.region == region_select" },
+    { "calculate": "datum.spend_million_aud / datum.trips_thousands", "as": "spend_per_trip_k" }
+  ],
+  "mark": { "type": "circle", "stroke": "#ffffff", "strokeWidth": 1 },
+  "encoding": {
+    "x": {
+      "field": "trips_thousands", "type": "quantitative",
+      "title": "Visitor trips (thousands, log scale)",
+      "scale": { "type": "log" },
+      "axis": { "labelFontSize": 10, "grid": true, "gridDash": [3,3], "gridColor": "#e0e0e0" }
+    },
+    "y": {
+      "field": "spend_million_aud", "type": "quantitative",
+      "title": "Spend in Australia ($M AUD, log scale)",
+      "scale": { "type": "log" },
+      "axis": { "labelFontSize": 10, "grid": true, "gridDash": [3,3], "gridColor": "#e0e0e0", "format": "~s" }
+    },
+    "size": {
+      "field": "spend_per_trip_k", "type": "quantitative",
+      "title": "Spend per trip ($K)",
+      "scale": { "range": [60, 1600] },
+      "legend": { "orient": "bottom-right", "titleFontSize": 11, "labelFontSize": 10 }
+    },
+    "color": {
+      "field": "region", "type": "nominal",
+      "title": "Region",
+      "scale": {
+        "domain": ["Asia", "Americas", "Europe", "Oceania", "Middle East & Africa"],
+        "range":  ["#D85A30", "#185FA5", "#7F77DD", "#1D9E75", "#BA7517"]
+      },
+      "legend": { "orient": "top-right", "titleFontSize": 11, "labelFontSize": 11 }
+    },
+    "opacity": {
+      "condition": { "param": "hover", "value": 1 },
+      "value": 0.55
+    },
+    "tooltip": [
+      { "field": "country",           "title": "Country" },
+      { "field": "region",            "title": "Region" },
+      { "field": "trips_thousands",   "title": "Trips (thousands)",   "format": ",.0f" },
+      { "field": "spend_million_aud", "title": "Spend in AUS ($M)",   "format": ",.0f" },
+      { "field": "spend_per_trip_k",  "title": "Avg spend/trip ($K)", "format": ".1f" }
+    ]
+  },
+  "config": { "view": { "stroke": null }, "axis": { "domain": false, "ticks": false } }
+}

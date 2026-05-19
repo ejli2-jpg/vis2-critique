@@ -1,0 +1,59 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Domestic visitor spend by capital city",
+    "subtitle": "Bubble size = total spend ($B AUD) | Source: TRA National Visitor Survey, Dec 2024",
+    "anchor": "start", "fontSize": 15, "subtitleFontSize": 11, "subtitleColor": "#666"
+  },
+  "width": 500,
+  "height": 450,
+  "projection": {
+    "type": "mercator",
+    "center": [133, -28],
+    "scale": 620
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "../Data/au-states-topo.json",
+        "format": { "type": "topojson", "feature": "states" }
+      },
+      "mark": { "type": "geoshape", "fill": "#d6e8d6", "stroke": "#ffffff", "strokeWidth": 1.2 }
+    },
+    {
+      "data": { "url": "../Data/spend_by_city.csv" },
+      "mark": { "type": "circle", "opacity": 0.82, "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude":  { "field": "latitude",  "type": "quantitative" },
+        "size": {
+          "field": "spend_billion_aud", "type": "quantitative",
+          "title": "Spend ($B AUD)",
+          "scale": { "range": [150, 3800] },
+          "legend": { "orient": "bottom-right", "titleFontSize": 11, "labelFontSize": 10 }
+        },
+        "color": {
+          "field": "spend_billion_aud", "type": "quantitative",
+          "scale": { "scheme": "reds" },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "city",             "title": "City" },
+          { "field": "state",            "title": "State" },
+          { "field": "spend_billion_aud","title": "Domestic spend ($B AUD)", "format": ".2f" },
+          { "field": "trips_millions",   "title": "Overnight trips (M)",     "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "../Data/spend_by_city.csv" },
+      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold", "color": "#333333" },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude":  { "field": "latitude",  "type": "quantitative" },
+        "text":      { "field": "city" }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null }, "background": "#c9dde8" }
+}

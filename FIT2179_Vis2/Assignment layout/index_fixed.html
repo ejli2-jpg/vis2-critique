@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tourism in Australia</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f5f4f0;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background: #0f1e2e;
+      padding: 12px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #D85A30;
+      flex-shrink: 0;
+    }
+
+    .nav-links { display: flex; gap: 6px; }
+
+    .nav-links a {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      padding: 4px 12px;
+      border: 0.5px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.65);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero {
+      background: #0f1e2e;
+      padding: 60px 48px 52px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #D85A30;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      max-width: 820px;
+    }
+
+    .hero-body {
+      font-size: 17px;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.8;
+      max-width: 780px;
+      margin-bottom: 44px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 20px 22px 18px;
+    }
+
+    .stat-value {
+      font-size: 34px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.4;
+    }
+
+    .band {
+      background: #0f1e2e;
+      padding: 20px 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .band-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .band-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    .band-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.52);
+      line-height: 1.65;
+      max-width: 820px;
+    }
+
+    .section {
+      background: #ffffff;
+      padding: 40px 48px 32px;
+      border-top: 1px solid #e8e6e0;
+    }
+
+    .section.last { padding-bottom: 52px; }
+
+    .sec-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #9e9b94;
+      margin-bottom: 6px;
+    }
+
+    .section h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .sec-body {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.75;
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    .chart-full {
+      background: #f7f6f2;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .chart-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .chart-block {
+      background: #f7f6f2;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .chart-head {
+      padding: 11px 14px 8px;
+      border-bottom: 1px solid #ebe9e3;
+    }
+
+    .chart-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .chart-sub {
+      font-size: 10px;
+      color: #9e9b94;
+      margin-top: 2px;
+    }
+
+    .chart-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+
+    .chart-tag-map   { background: #E1F5EE; color: #0F6E56; }
+    .chart-tag-chart { background: #E6F1FB; color: #185FA5; }
+    .chart-tag-net   { background: #EEEDFE; color: #534AB7; }
+    .chart-tag-tree  { background: #FAECE7; color: #993C1D; }
+    .chart-tag-int   { background: #FAEEDA; color: #854F0B; }
+
+    .chart-body { padding: 8px; }
+
+    .footer {
+      background: #ffffff;
+      border-top: 1px solid #e8e6e0;
+      padding: 14px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer span { font-size: 11px; color: #9e9b94; }
+
+    @media (max-width: 900px) {
+      .stats-grid, .chart-grid-2 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 30px; }
+      .hero, .section, .band, .navbar, .footer { padding-left: 20px; padding-right: 20px; }
+    }
+
+  </style>
+</head>
+<body>
+
+
+  <!-- HERO -->
+  <header class="hero" id="overview">
+    <p class="hero-eyebrow">FIT2179 &middot; Australian Tourism &middot; 2024</p>
+    <h1>Australia's visitor economy is one of the country's most dynamic industries</h1>
+    <p class="hero-body">
+      Shaped by millions of journeys taken every year &mdash; from weekend getaways in regional Victoria to
+      long-haul flights landing in Sydney from Tokyo, London, and New Delhi &mdash; this visualisation
+      explores where Australians travel within their own country, which nations send the most visitors
+      to our shores, what those visitors do and spend when they arrive, and how the industry has
+      recovered from the most devastating disruption in its history &mdash; the COVID-19 pandemic.
+      The picture that emerges is one of remarkable scale, stark geographic inequality, and an uneven
+      recovery that has left some markets thriving and others still finding their footing.
+    </p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">7.6M</div>
+        <div class="stat-label">International trips to Australia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">113M</div>
+        <div class="stat-label">Domestic overnight trips</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$159B</div>
+        <div class="stat-label">Total visitor spend AUD</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">737K</div>
+        <div class="stat-label">Tourism-supported jobs</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BAND 1 -->
+  <div class="band">
+    <div class="band-num">1</div>
+    <div>
+      <div class="band-title">The big picture &mdash; scale, trend, and the COVID collapse</div>
+      <p class="band-sub">
+        Before diving into detail, it helps to understand the scale. In 2024, Australia recorded 7.6 million
+        international visitor trips and 113 million domestic overnight trips. The charts below show how those
+        numbers have moved over time and how the pandemic created the sharpest single-year collapse in
+        Australian tourism history.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <section class="section" id="section1">
+    <p class="sec-eyebrow">Section 1 &mdash; the big picture</p>
+    <h2>Scale, trend, and the COVID collapse</h2>
+    <p class="sec-body">
+      Domestic tourism dwarfs international in raw trip numbers, but international visitors punch well above
+      their weight on spend per night. The dot map shows the visitor night split between domestic and
+      international across every state, while the charts below reveal how the pandemic hollowed out
+      arrivals before a slow and uneven recovery began in 2022.
+    </p>
+
+    <!-- VIS 1 -->
+    <div class="chart-full">
+      <div class="chart-head">
+        <div class="chart-title">Domestic vs international visitor nights by state</div>
+        <div class="chart-sub">Each dot &asymp; 500K visitor nights &nbsp;|&nbsp; TRA NVS + IVS, Dec 2024</div>
+      </div>
+      <div class="chart-body">
+        <div id="visitor_stays"></div>
+        <script>vegaEmbed('#visitor_stays', '../Chart/1_Visitor_stays.vg.json').catch(console.error);</script>
+      </div>
+    </div>
+
+    <!-- VIS 2 + VIS 3 -->
+    <div class="chart-grid-2">
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">International arrivals 2012&ndash;2024 </div>
+          <div class="chart-sub">ABS Overseas Arrivals &amp; Departures</div>
+        </div>
+        <div class="chart-body">
+          <div id="line_arrivals"></div>
+          <script>vegaEmbed('#line_arrivals', '../Chart/2_Line_arrivals.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Domestic vs international visitor nights </div>
+          <div class="chart-sub">TRA NVS + IVS</div>
+        </div>
+        <div class="chart-body">
+          <div id="area_nights"></div>
+          <script>vegaEmbed('#area_nights', '../Chart/3_Area_night_comparison.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BAND 2 -->
+  <div class="band" id="where">
+    <div class="band-num">2</div>
+    <div>
+      <div class="band-title">Where in Australia &mdash; mapping the hotspots</div>
+      <p class="band-sub">
+        Not all of Australia shares equally in the tourism boom. NSW and Victoria dominate domestic overnight
+        travel, driven by Sydney and Melbourne. Two maps show the volume of domestic trips by state and
+        the cities where visitors are spending the most.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <section class="section">
+    <p class="sec-eyebrow">Section 2 &mdash; where in australia</p>
+    <h2>Mapping Australia's visitor hotspots</h2>
+    <p class="sec-body">
+      Where Australians travel overnight, and where they open their wallets. The choropleth shows trip
+      volumes by state while the bubble map reveals that Sydney and Melbourne dominate both visitor
+      numbers and spend.
+    </p>
+
+    <!-- VIS 4 + VIS 5 -->
+    <div class="chart-grid-2">
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Domestic overnight trips by state </div>
+          <div class="chart-sub">TRA NVS, year ending Dec 2024</div>
+        </div>
+        <div class="chart-body">
+          <div id="choropleth_domestic"></div>
+          <script>vegaEmbed('#choropleth_domestic', '../Chart/4_Choropleth_domestic.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Visitor spend by capital city </div>
+          <div class="chart-sub">TRA NVS, bubble size = spend $B AUD</div>
+        </div>
+        <div class="chart-body">
+          <div id="bubble_map"></div>
+          <script>vegaEmbed('#bubble_map', '../Chart/5_Bubblemap_cities.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BAND 3 -->
+  <div class="band" id="international">
+    <div class="band-num">3</div>
+    <div>
+      <div class="band-title">Who visits from overseas &mdash; origins, markets, and flight corridors</div>
+      <p class="band-sub">
+        Australia's international visitor base is overwhelmingly Asian. New Zealand sends the most visitors
+        by volume, but China, India, and Southeast Asia account for the majority of spending. A network
+        diagram shows the flight corridors that connect source markets to Australian airports.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <section class="section" id="international">
+    <p class="sec-eyebrow">Section 3 &mdash; international visitors</p>
+    <h2>Australia's international markets</h2>
+    <p class="sec-body">
+      Where our visitors come from, how their trip volumes compare to their spend, and the aviation
+      connections that make it all possible. Use the dropdown on the scatter plot to filter by region.
+    </p>
+
+    <!-- VIS 6 -->
+    <div class="chart-full">
+      <div class="chart-head">
+        <div class="chart-title">Visitor origins &mdash; world map </div>
+        <div class="chart-sub">TRA IVS, Dec 2024 &middot; log colour scale &middot; use dropdown to zoom by region</div>
+      </div>
+      <div class="chart-body">
+        <div id="choropleth_world"></div>
+        <script>vegaEmbed('#choropleth_world', '../Chart/6_Choropleth_world.vg.json').catch(console.error);</script>
+      </div>
+    </div>
+
+    <!-- VIS 7 + VIS 8 -->
+    <div class="chart-grid-2">
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Top 10 visitor markets </div>
+          <div class="chart-sub">TRA IVS, Dec 2024</div>
+        </div>
+        <div class="chart-body">
+          <div id="bar_top_markets"></div>
+          <script>vegaEmbed('#bar_top_markets', '../Chart/7_Bar_Top10.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Trips vs spend per country </div>
+          <div class="chart-sub">Filter by region &middot; TRA IVS</div>
+        </div>
+        <div class="chart-body">
+          <div id="scatter_spend_trips"></div>
+          <script>vegaEmbed('#scatter_spend_trips', '../Chart/8_Scatter_spend_trips.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIS 9 -->
+    <div class="chart-full">
+      <div class="chart-head">
+        <div class="chart-title">Key international flight corridors into Australia </div>
+        <div class="chart-sub">node size = visitor volume &middot; edge thickness = weekly frequency &middot; TRA IVS + BITRE</div>
+      </div>
+      <div class="chart-body">
+        <div id="network_flights"></div>
+        <script>vegaEmbed('#network_flights', '../Chart/9_network_flights.vg.json').catch(console.error);</script>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BAND 4 -->
+  <div class="band" id="purpose">
+    <div class="band-num">4</div>
+    <div>
+      <div class="band-title">Why they travel and what they do when they get here</div>
+      <p class="band-sub">
+        Purpose shapes spending patterns dramatically. International education tourism drives enormous spend
+        per trip, while domestic holiday travel dominates in raw volume. Australia's natural environment &mdash;
+        beaches, national parks, wildlife &mdash; remains the defining experiential drawcard.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <section class="section" id="purpose">
+    <p class="sec-eyebrow">Section 4 &mdash; purpose &amp; activities</p>
+    <h2>Purpose &amp; activities</h2>
+    <p class="sec-body">
+      From the purpose that drives the trip to the activities visitors choose on arrival, this section maps
+      the experience layer of Australian tourism &mdash; and reveals the categories that generate the most value.
+    </p>
+
+    <!-- VIS 10 + VIS 11 -->
+    <div class="chart-grid-2">
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Expenditure by purpose of travel </div>
+          <div class="chart-sub">TRA NVS + IVS, domestic vs international</div>
+        </div>
+        <div class="chart-body">
+          <div id="stacked_bar_purpose"></div>
+          <script>vegaEmbed('#stacked_bar_purpose', '../Chart/10_stacked_bar_purpose.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Visitor activity hierarchy </div>
+          <div class="chart-sub">TRA IVS &middot; % of int'l visitors participating</div>
+        </div>
+        <div class="chart-body">
+          <div id="tree_activity"></div>
+          <script>vegaEmbed('#tree_activity', '../Chart/11_tree_activities.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIS 15 -->
+    <div class="chart-full">
+      <div class="chart-head">
+        <div class="chart-title">Top activities by international visitors </div>
+        <div class="chart-sub">TRA IVS &middot; % of int'l visitors participating</div>
+      </div>
+      <div class="chart-body">
+        <div id="bar_activities"></div>
+        <script>vegaEmbed('#bar_activities', '../Chart/15_bar_activities.vg.json').catch(console.error);</script>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BAND 5 -->
+  <div class="band" id="recovery">
+    <div class="band-num">5</div>
+    <div>
+      <div class="band-title">When they visit &mdash; and are we back to normal?</div>
+      <p class="band-sub">
+        International arrivals collapsed from 9.4 million in 2019 to just 263,000 in 2021 &mdash; a 97% decline.
+        The recovery has been uneven. New Zealand and the USA have returned to or exceeded pre-pandemic levels.
+        China remains well below its 2019 peak. The state recovery map closes the story geographically.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <section class="section last" id="recovery">
+    <p class="sec-eyebrow">Section 5 &mdash; timing &amp; recovery</p>
+    <h2>Seasonality and the road back from COVID</h2>
+    <p class="sec-body">
+      The heatmap makes the pandemic collapse impossible to miss. The slope chart shows which markets
+      recovered fastest. The recovery choropleth closes the story geographically &mdash; showing which
+      Australian states have seen the strongest rebound in international arrivals.
+    </p>
+
+    <!-- VIS 12 + VIS 13 -->
+    <div class="chart-grid-2">
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">Monthly arrival seasonality </div>
+          <div class="chart-sub">ABS OAD, 2019 + 2022&ndash;2024</div>
+        </div>
+        <div class="chart-body">
+          <div id="heatmap_seasonality"></div>
+          <script>vegaEmbed('#heatmap_seasonality', '../Chart/12_heatmap_seasonality.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div class="chart-head">
+          <div class="chart-title">COVID recovery by country: 2019 vs 2024 </div>
+          <div class="chart-sub">TRA IVS &middot; green = above 2019 &middot; red = below</div>
+        </div>
+        <div class="chart-body">
+          <div id="slope_recovery"></div>
+          <script>vegaEmbed('#slope_recovery', '../Chart/13_slope_recovery.vg.json').catch(console.error);</script>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIS 14 -->
+    <div class="chart-full">
+      <div class="chart-head">
+        <div class="chart-title">State-by-state international visitor recovery </div>
+        <div class="chart-sub">2024 arrivals as % of 2019 baseline &middot; ABS Overseas Arrivals &amp; Departures</div>
+      </div>
+      <div class="chart-body">
+        <div id="recovery_map"></div>
+        <script>vegaEmbed('#recovery_map', '../Chart/14_recovery_map.vg.json').catch(console.error);</script>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Data: Tourism Research Australia (TRA) &middot; Australian Bureau of Statistics (ABS) &middot; Year ending Dec 2024 &middot; All figures AUD</span>
+    <span>FIT2179 Data Visualisation 2 &middot; Monash University &middot; Semester 1, 2026</span>
+  </footer>
+
+</body>
+</html>
